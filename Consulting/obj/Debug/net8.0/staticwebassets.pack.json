@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/cristinavidal/Projects/Consulting/Consulting/wwwroot/bootstrap/css/bootstrap.css",
+      "PackagePath": "staticwebassets/bootstrap/css/bootstrap.css"
+    },
+    {
+      "Id": "/Users/cristinavidal/Projects/Consulting/Consulting/wwwroot/bootstrap/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/bootstrap/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/Users/cristinavidal/Projects/Consulting/Consulting/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "/Users/cristinavidal/Projects/Consulting/Consulting/wwwroot/scripts/app.js",
+      "PackagePath": "staticwebassets/scripts/app.js"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.Consulting.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.Consulting.props",
+      "PackagePath": "build\\Consulting.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.Consulting.props",
+      "PackagePath": "buildMultiTargeting\\Consulting.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.Consulting.props",
+      "PackagePath": "buildTransitive\\Consulting.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

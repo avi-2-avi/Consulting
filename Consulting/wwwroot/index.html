@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulting App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Persona Management</h1>
+    <div id="personas-list" class="mb-4">
+    </div>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addPersonaModal">Add Persona</button>
+</div>
+
+<div class="modal fade" id="addPersonaModal" tabindex="-1" role="dialog" aria-labelledby="addPersonaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPersonaModalLabel">Add Persona</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addPersonaForm">
+                    <div class="form-group">
+                        <label for="numero">Número</label>
+                        <input type="number" class="form-control" id="numero" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombreApellido">Nombre y Apellido</label>
+                        <input type="text" class="form-control" id="nombreApellido" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaHora">Fecha y Hora</label>
+                        <input type="datetime-local" class="form-control" id="fechaHora" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        loadPersonas();
+
+        function loadPersonas() {
+            $.ajax({
+                url: '/api/Persona',
+                method: 'GET',
+                success: function(data) {
+                    let personasList = $('#personas-list');
+                    personasList.empty();
+                    data.forEach(function(persona) {
+                        personasList.append(`
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${persona.nombreApellido}</h5>
+                                        <p class="card-text">Número: ${persona.numero}</p>
+                                        <p class="card-text">Fecha y Hora: ${new Date(persona.fechaHora).toLocaleString()}</p>
+                                        <button class="btn btn-danger btn-sm" onclick="deletePersona(${persona.id})">Delete</button>
+                                    </div>
+                                </div>
+                            `);
+                    });
+                }
+            });
+        }
+
+        $('#addPersonaForm').submit(function(event) {
+            event.preventDefault();
+            let numero = $('#numero').val();
+            let nombreApellido = $('#nombreApellido').val();
+            let fechaHora = $('#fechaHora').val();
+
+            let persona = {
+                id: 0, 
+                numero: parseInt(numero),
+                nombreApellido: nombreApellido,
+                fechaHora: new Date(fechaHora).toISOString()
+            };
+
+            $.ajax({
+                url: '/api/Persona',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(persona),
+                success: function() {
+                    $('#addPersonaModal').modal('hide');
+                    loadPersonas();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error adding persona:', error);
+                }
+            });
+        });
+    });
+
+    function deletePersona(id) {
+        $.ajax({
+            url: '/api/Persona/' + id,
+            method: 'DELETE',
+            success: function() {
+                loadPersonas();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting persona:', error);
+            }
+        });
+    }
+</script>
+</body>
+</html>
